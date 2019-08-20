@@ -1,16 +1,19 @@
-//JS es debilmente tipado, no hay nada que diga que la Variable
-//texto sea de un tipo definido
-//console.log('Hola mundo JS!')
-//var nombre
-//nombre = 'Martin'
-
-//var nombre = 'Martin'
-//var apellido = 'Maceda'
+//JS es debilmente tipado, no hay nada que diga que la Variable texto sea de un tipo definido
 var nombre = 'Martin', apellido = 'Maceda'
-var edad = 28
 
-edad = '28 anos'
-console.log('Hola ' + nombre + ' ' + apellido)
-console.log('Tengo ' + edad)
+var nombreMayusculas = nombre.toUpperCase()
+var apellidoMinusculas = apellido.toLowerCase()
 
-var peso = 75
+var primeraLetraNombre = nombre.charAt(0)
+var cantidadLetrasNombre = nombre.length //length es un atributo
+
+var nombreCompleto = nombre + ' ' + apellido
+
+//interpolacion de texto
+var nombreCompleto = `${nombre} ${apellido.toUpperCase()}`
+//dentro de las llaves podemos escribir codigo Js
+
+//var str = nombre.charAt(1) + nombre.charAt(2)
+var str = nombre.substr(1,3)
+
+var ultimaLetra = nombre.charAt(nombre.length-1)
