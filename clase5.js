@@ -30,3 +30,13 @@ function imprimirNombreYEdad(persona) {
 imprimirNombreYEdad(Martin)
 imprimirNombreYEdad(Dario)
 imprimirNombreYEdad({nombre: 'ricks', edad: 23})
+
+/////////////////////////////Parametros como referencia o como valor
+////los objetos que pasan por paramentros se pasan por referencia y por lo tanto sus valores son modificados
+function cumpleanos(persona) {
+   return {
+     //desglosamos a la persona dentro de este nuevo objeto, podemos modificar atributos y agregar nuevos
+     ...persona,
+     edad: persona.edad + 1
+   }
+}
