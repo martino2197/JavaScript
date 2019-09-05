@@ -1,7 +1,7 @@
 var Martin = {
   nombre: 'Martin',
   apellido: 'Maceda',
-  edad: 22,
+  edad: 18,
   ingeniero: true,
   cocinero: true,
   cantante: false,
@@ -54,3 +54,28 @@ function imprimirMayorDeEdad(persona){
 }
 
 imprimirMayorDeEdad(Martin)
+
+/////////////////////////Clase 12 Arrow Functions////////////////////////////////////////
+
+
+const esMayorEdad2 = ({ edad }) => edad >= MAYORIA_DE_EDAD
+
+function imprimirMayorDeEdad2(persona){
+  if (esMayorEdad2(persona)){
+    console.log(`${persona.nombre} es Mayor de edad, tiene ${persona.edad} anos`);
+  } else {
+    console.log(`${persona.nombre} es Menor de edad, tiene ${persona.edad} anos`);
+  }
+}
+
+//function permitirAcceso(persona) {
+  //  if (!esMayorEdad2(persona)) {
+    //  console.log('ACCESO DENEGADO');
+    //}
+//}
+
+const permitirAcceso = persona => {
+    if(!esMayorEdad2){
+      console.log('ACCESO DENEGADO');
+    }
+  }
