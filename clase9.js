@@ -1,6 +1,6 @@
 var x = 4, y = '4'
 //x == y
-//truex == y
+//true x == y
 //x === y
 //false
 // SIEMPRE UTILIZAR EL TRIPLE IGUAL
