@@ -42,6 +42,9 @@ var personasBajas = personas.filter(esBaja)
 //////////////////////////Clase 19///////////////////////////////\
 //Transformar un array por medio de la funcion MAP()
 //recordar que los objetos se pasan por referencia
+//map() devuelve un nuevo array, la modificacion en el array original
+//es debido a que estamos haciendo la modificacion en cada elemento
+// y por lo tanto perdura en el array original
 const pasarAlturaCms = persona => ({
   //persona.estatura = persona.estatura*100
   //persona.estatura *= 100
