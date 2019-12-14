@@ -106,6 +106,7 @@
         constructor(){
           this.inicializar()
           this.generarSecuencia()
+          this.siguienteNivel()
         }
 
 
@@ -130,10 +131,51 @@
           // Math.floor() esta haciendo un redondeo hacia abajo del valor que recibe
           this.secuencia = new Array(10).fill(0).map(n => Math.floor(Math.random() * 4))
         }
+
+        siguienteNivel() {
+          this.iluminarSecuencia()
+        }
+
+        transformarNumeroAColor(numero){
+          switch(numero){
+            case 0:
+              return 'celeste'
+              break;
+            case 1:
+              return 'violeta'
+              break;
+            case 2:
+              return 'naranja'
+            case 3:
+              return 'verde'
+          }
+        }
+
+        iluminarSecuencia(){
+          //dentro de los ciclos for siempre conviene utilizar let
+            for(let i = 0; i < this.nivel; i++){
+              //debemos usar let color, de lo contrario al asignar color con var
+              //la variable color se va ir pisando a medida que se realice el ciclo
+              let color = this.transformarNumeroAColor(this.secuencia[i])
+              //ocupamos el setTimeout() para iluminar cada segundo
+              //fuera del setTimeout() nuestros colores son correctos
+              //dentro del setTimeout() solo vamos a tener el ultimpo color de la secuencia
+              setTimeout(() => this.iluminarColor(color), 1000 * i)
+            }
+        }
+
+        iluminarColor(color) {
+          this.colores[color].classList.add(`light`)
+          setTimeout(() => this.apagarColor(color), 350)
+        }
+
+        apagarColor(color) {
+          this.colores[color].classList.remove(`light`)
+        }
       }
 
       function empezarJuego() {
-        window.juego = new Juego()
+        var juego = new Juego()
 
       }
     </script>
