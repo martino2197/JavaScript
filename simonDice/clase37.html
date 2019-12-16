@@ -101,22 +101,28 @@
       const verde = document.getElementById(`verde`)
       const btnEmpezar = document.getElementById(`btnEmpezar`)
 
+      //guardamos nuestro ultimo  nivel
+      const ULTIMO_NIVEL = 10
+
 
       class Juego {
         constructor(){
           this.inicializar()
           this.generarSecuencia()
-          this.siguienteNivel()
+
+          //utilizamos el setTimeout para que no se ilumine tan rapido al empezar el juego
+          setTimeout(this.siguienteNivel.bind(this), 500)
         }
 
 
         inicializar() {
 
           //this.elegirColor = this.elegirColor.bind(this)
+          //this.siguienteNivel = this.siguienteNivel.bind(this)
 
         //ocultamos el btnEmpezar al darle click
           btnEmpezar.classList.add(`hide`)
-          this.nivel = 2
+          this.nivel = 1
           this.colores = {
             //celeste: celeste  podemos poner simplemente el nombre si se llaman exactamente igual
             celeste,
@@ -132,10 +138,11 @@
           // .map() necesita que los elementos del array esten inicializados
           // Math.random() nos devuelve un numero aleatorio entre 0 y 1
           // Math.floor() esta haciendo un redondeo hacia abajo del valor que recibe
-          this.secuencia = new Array(10).fill(0).map(n => Math.floor(Math.random() * 4))
+          this.secuencia = new Array(ULTIMO_NIVEL).fill(0).map(n => Math.floor(Math.random() * 4))
         }
 
         siguienteNivel() {
+          this.subnivel = 0
           this.iluminarSecuencia()
           this.agregarEventosClick()
         }
@@ -157,7 +164,24 @@
           }
         }
 
-        iluminarSecuencia(){
+        transformarColorANumero(color){
+          switch(color){
+            case 'celeste':
+              return 0
+              break;
+            case 'violeta':
+              return 1
+              break;
+            case 'naranja':
+              return 2
+              break;
+            case 'verde':
+              return 3
+              break;
+          }
+        }
+
+        iluminarSecuencia() {
           //dentro de los ciclos for siempre conviene utilizar let
             for(let i = 0; i < this.nivel; i++){
               //debemos usar let color, de lo contrario al asignar color con var
@@ -197,15 +221,52 @@
 
         }
 
+
+        eliminarEventosClick() {
+          this.colores.celeste.removeEventListener(`click`, this.elegirColor.bind(this))
+          this.colores.verde.removeEventListener(`click`, this.elegirColor.bind(this))
+          this.colores.violeta.removeEventListener(`click`, this.elegirColor.bind(this))
+          this.colores.naranja.removeEventListener(`click`, this.elegirColor.bind(this))
+        }
         //javascript va a perder el contexto cuando llamemos a elegirColor()
         //Recordemos que quien es this
         elegirColor(ev) {
           //console.log(ev)
-
           //Ahora this hace referencia unicamente al boton que apretamos y que activa nuestro evento
-          console.log(this)
-
+          //console.log(this)
           //Queremos que
+
+          const nombreColor = ev.target.dataset.color
+          const numeroColor = this.transformarColorANumero(nombreColor)
+          this.iluminarColor(nombreColor)
+
+          if (numeroColor === this.secuencia[this.subnivel]) {
+            //el primer subnivel es el 0 y se incrementa si ha elegido correctamente
+            this.subnivel++
+
+            //Si subnivel y nivel son iguales, entonces el usuario pasa de nivel
+            if (this.subnivel === this.nivel) {
+              //el usuario pasa de nivel
+              this.nivel++
+
+              //eliminamos los eventos de click
+              this.eliminarEventosClick()
+
+              if(this.nivel === (ULTIMO_NIVEL + 1)) {
+                //Gano
+              } else {
+                //this.siguienteNivel() invocamos la funcion
+                //this.siguienteNivel pasamos la referencia a la funcion
+
+                //el setTimeout() delega en el navegador la ejecucion de la funcion
+                // y por lo tanto cambia el contexto de this.
+                setTimeout(this.siguienteNivel.bind(this), 1500)
+              }
+            }
+          } else {
+            //perdio
+          }
+
         }
 
       }
