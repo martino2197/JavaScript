@@ -82,6 +82,11 @@
       .hide {
         display: none;
       }
+
+      * {
+        font-family: 'Arial';
+      }
+
     </style>
   </head>
   <body>
@@ -92,6 +97,7 @@
       <div id="verde" class="color verde right" data-color="verde"></div>
       <button id="btnEmpezar" class="btn-start" onclick="empezarJuego()">Empezar a jugar!</button>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script>
 
       //Obtenemos los elementros por medio de su Id
@@ -104,6 +110,7 @@
       //guardamos nuestro ultimo  nivel
       const ULTIMO_NIVEL = 10
 
+      //swal(`hola`)
 
       class Juego {
         constructor(){
@@ -117,11 +124,14 @@
 
         inicializar() {
 
-          //this.elegirColor = this.elegirColor.bind(this)
+          //IMPORTANTE PONER EL BIND SIEMPRE EN EL inicializador o el this tendra problemas al hacer iteraciones
+          this.elegirColor = this.elegirColor.bind(this)
           //this.siguienteNivel = this.siguienteNivel.bind(this)
 
+          //toggle significa ser un interruptor del boton EMPEZAR
+          this.toggleBtnEmpezar()
         //ocultamos el btnEmpezar al darle click
-          btnEmpezar.classList.add(`hide`)
+          //btnEmpezar.classList.add(`hide`)
           this.nivel = 1
           this.colores = {
             //celeste: celeste  podemos poner simplemente el nombre si se llaman exactamente igual
@@ -129,6 +139,14 @@
             violeta,
             naranja,
             verde
+          }
+        }
+
+        toggleBtnEmpezar() {
+          if (btnEmpezar.classList.contains(`hide`)){
+            btnEmpezar.classList.remove(`hide`)
+          } else {
+            btnEmpezar.classList.add(`hide`)
           }
         }
 
@@ -210,23 +228,23 @@
 
           //Para no perder la referencia a this podemos hacer lo siguiente
           //var _self = this
-          this.colores.celeste.addEventListener(`click`, this.elegirColor.bind(this))
+          this.colores.celeste.addEventListener(`click`, this.elegirColor)
           //utilizando .bind(this) mantenemos la referencia al nuevo objeto 'Juego'
           // .bind(especificamos quien es el this/contexto) es para enlazar o atar
           // si no ponemos .bind() el metodo this.elegirColor va a tener a this como el boton que apretemos
 
-          this.colores.verde.addEventListener(`click`, this.elegirColor.bind(this))
-          this.colores.violeta.addEventListener(`click`, this.elegirColor.bind(this))
-          this.colores.naranja.addEventListener(`click`, this.elegirColor.bind(this))
+          this.colores.verde.addEventListener(`click`, this.elegirColor)
+          this.colores.violeta.addEventListener(`click`, this.elegirColor)
+          this.colores.naranja.addEventListener(`click`, this.elegirColor)
 
         }
 
 
         eliminarEventosClick() {
-          this.colores.celeste.removeEventListener(`click`, this.elegirColor.bind(this))
-          this.colores.verde.removeEventListener(`click`, this.elegirColor.bind(this))
-          this.colores.violeta.removeEventListener(`click`, this.elegirColor.bind(this))
-          this.colores.naranja.removeEventListener(`click`, this.elegirColor.bind(this))
+          this.colores.celeste.removeEventListener(`click`, this.elegirColor)
+          this.colores.verde.removeEventListener(`click`, this.elegirColor)
+          this.colores.violeta.removeEventListener(`click`, this.elegirColor)
+          this.colores.naranja.removeEventListener(`click`, this.elegirColor)
         }
         //javascript va a perder el contexto cuando llamemos a elegirColor()
         //Recordemos que quien es this
@@ -242,10 +260,15 @@
 
           if (numeroColor === this.secuencia[this.subnivel]) {
             //el primer subnivel es el 0 y se incrementa si ha elegido correctamente
+            console.log(numeroColor)
+            console.log(this.secuencia[this.subnivel])
             this.subnivel++
 
             //Si subnivel y nivel son iguales, entonces el usuario pasa de nivel
             if (this.subnivel === this.nivel) {
+
+              console.log(`el subnivel es ${this.subnivel}`)
+              console.log(`el nivel es ${this.nivel}`);
               //el usuario pasa de nivel
               this.nivel++
 
@@ -254,6 +277,7 @@
 
               if(this.nivel === (ULTIMO_NIVEL + 1)) {
                 //Gano
+                this.ganoElJuego()
               } else {
                 //this.siguienteNivel() invocamos la funcion
                 //this.siguienteNivel pasamos la referencia a la funcion
@@ -265,8 +289,26 @@
             }
           } else {
             //perdio
+            this.perdioElJuego()
           }
 
+        }
+
+        ganoElJuego() {
+          //swal() nos devuelve una promesa, podemos utilizar el .then()
+          swal(`Platzi`,`Felicitaciones, ganaste el juego`, 'success')
+            .then(this.inicializar.bind(this))
+            console.log(this)
+        }
+
+        perdioElJuego() {
+          //swal() nos devuelve una promesa, podemos utilizar el .then()
+          swal(`Platzi`,`Lo lamentamos, perdiste :()`, 'error')
+            .then(() => {
+              this.eliminarEventosClick()
+              this.inicializar()
+              console.log(this);
+            })
         }
 
       }
