@@ -97,7 +97,7 @@
       //Obtenemos los elementros por medio de su Id
       const celeste = document.getElementById(`celeste`)
       const violeta = document.getElementById(`violeta`)
-      const naranja = document.getElementById(`naraja`)
+      const naranja = document.getElementById(`naranja`)
       const verde = document.getElementById(`verde`)
       const btnEmpezar = document.getElementById(`btnEmpezar`)
 
@@ -111,9 +111,12 @@
 
 
         inicializar() {
-          //ocultamos el btnEmpezar al darle click
+
+          //this.elegirColor = this.elegirColor.bind(this)
+
+        //ocultamos el btnEmpezar al darle click
           btnEmpezar.classList.add(`hide`)
-          this.nivel = 1
+          this.nivel = 2
           this.colores = {
             //celeste: celeste  podemos poner simplemente el nombre si se llaman exactamente igual
             celeste,
@@ -134,6 +137,7 @@
 
         siguienteNivel() {
           this.iluminarSecuencia()
+          this.agregarEventosClick()
         }
 
         transformarNumeroAColor(numero){
@@ -146,8 +150,10 @@
               break;
             case 2:
               return 'naranja'
+              break;
             case 3:
               return 'verde'
+              break;
           }
         }
 
@@ -156,7 +162,8 @@
             for(let i = 0; i < this.nivel; i++){
               //debemos usar let color, de lo contrario al asignar color con var
               //la variable color se va ir pisando a medida que se realice el ciclo
-              let color = this.transformarNumeroAColor(this.secuencia[i])
+              const color = this.transformarNumeroAColor(this.secuencia[i])
+              //console.log(color)
               //ocupamos el setTimeout() para iluminar cada segundo
               //fuera del setTimeout() nuestros colores son correctos
               //dentro del setTimeout() solo vamos a tener el ultimpo color de la secuencia
@@ -172,10 +179,39 @@
         apagarColor(color) {
           this.colores[color].classList.remove(`light`)
         }
+
+        agregarEventosClick() {
+          //a cada uno de los colores les debemos agregar el evento onclick
+          //esta funcion se va a ejecutar de forma asincrona
+
+          //Para no perder la referencia a this podemos hacer lo siguiente
+          //var _self = this
+          this.colores.celeste.addEventListener(`click`, this.elegirColor.bind(this))
+          //utilizando .bind(this) mantenemos la referencia al nuevo objeto 'Juego'
+          // .bind(especificamos quien es el this/contexto) es para enlazar o atar
+          // si no ponemos .bind() el metodo this.elegirColor va a tener a this como el boton que apretemos
+
+          this.colores.verde.addEventListener(`click`, this.elegirColor.bind(this))
+          this.colores.violeta.addEventListener(`click`, this.elegirColor.bind(this))
+          this.colores.naranja.addEventListener(`click`, this.elegirColor.bind(this))
+
+        }
+
+        //javascript va a perder el contexto cuando llamemos a elegirColor()
+        //Recordemos que quien es this
+        elegirColor(ev) {
+          //console.log(ev)
+
+          //Ahora this hace referencia unicamente al boton que apretamos y que activa nuestro evento
+          console.log(this)
+
+          //Queremos que
+        }
+
       }
 
       function empezarJuego() {
-        var juego = new Juego()
+        window.juego = new Juego()
 
       }
     </script>
