@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <script>
+      const Martin = {
+        nombre: 'Martin',
+        apellido: 'Maceda'
+      }
+
+      const Luis = {
+        nombre: 'Luis',
+        apellido: 'Nazario'
+      }
+
+      function saludar(saludo = 'Hola') {
+        console.log(`${saludo}, mi nombre es ${this.nombre}`);
+      }
+
+      //const saludarAMartin = saludar.bind(Martin)
+      //const saludarALuis = saludar.bind(Luis)
+
+      //setTimeout(saludar.bind(Martin, 'Que onda we'), 1000)
+
+      //bind devuelve una funcion esncadenada a un nuevo contexto, pero no la ejecuta
+
+      //call y apply ejecutan en ese momento la funcion
+
+      //saludar.call(Martin, 'Hola we')
+
+      //los parametro dentro del apply van como un array
+      saludar.apply(Martin, ['Hola prro'])
+
+
+
+      //El contexto (o alcance) de una función es por lo general, window. Así que en ciertos casos, cuando intentamos referirnos a this en alguna parte del código, es posible que tengamos un comportamiento inesperado, porque el contexto quizás no sea el que esperamos.
+      //Existen al menos tres maneras de cambiar el contexto de una función.
+          //Usando el método .bind, enviamos la referencia a la función sin ejecutarla, pasando el contexto como parámetro.
+          //Usando el método .call, ejecutamos inmediatamente la función con el contexto indicado
+          //Usando el método .apply, es similar a .call pero los parámetros adicionales se pasan como un arreglo de valores
+
+    </script>
+  </body>
+</html>
