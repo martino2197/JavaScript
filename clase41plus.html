@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <script>
+       function crearSaludo(finalDeFrase) {
+         return function (nombre) {
+           console.log(`Hola ${nombre} ${finalDeFrase}`)
+         }
+       }
+
+       const saludoArgentino = crearSaludo("che")
+       const saludoMexicano = crearSaludo("wey")
+       const saludoColombiano = crearSaludo("parse")
+
+       saludoArgentino('Martin')
+       saludoMexicano('Martin')
+       saludoColombiano('Martin')
+
+       //Un closure, básicamente, es una función que recuerda el estado de las variables al momento de ser invocada,
+       //y conserva este estado a través de reiteradas ejecuciones.
+       //Un aspecto fundamental de los closures es que son funciones que retornan otras funciones.
+
+    </script>
+  </body>
+</html>
